@@ -4,7 +4,11 @@ import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function signUp(prevState: any, formData: FormData) {
+export type AuthState = {
+  error?: string
+} | null
+
+export async function signUp(prevState: AuthState, formData: FormData): Promise<AuthState> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
@@ -26,7 +30,7 @@ export async function signUp(prevState: any, formData: FormData) {
   redirect('/dashboard')
 }
 
-export async function signIn(prevState: any, formData: FormData) {
+export async function signIn(prevState: AuthState, formData: FormData): Promise<AuthState> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
